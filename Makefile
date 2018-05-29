@@ -6,11 +6,11 @@
 #    By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/25 16:35:26 by akaseris          #+#    #+#              #
-#    Updated: 2018/05/22 14:28:16 by akaseris         ###   ########.fr        #
+#    Updated: 2018/05/29 13:59:08 by akaseris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = checker
+NAME = lem_in
 
 SRC = src/
 INC = includes/
@@ -19,9 +19,11 @@ LIB = libft/libft.a
 
 FLAGS = -Wall -Wextra -Werror 
 
-FT = ft_lem_in
+FT = ft_lem_in ft_input ft_inp_tools ft_inp_tools2 ft_map ft_map_tools ft_path \
+		ft_path_tools ft_move
 
 FT_O = $(patsubst %,%.o,$(FT))
+FT_O_IN = $(patsubst %,$(OBJ)%.o,$(FT))
 FT_C = $(patsubst %,$(SRC)%.c,$(FT))
 
 .PHONY : all clean fclean re
@@ -31,14 +33,14 @@ all: $(NAME)
 $(LIB):
 	@make -C libft/ all
 
-$(FT_O): $(LIB) $(FT_C)
+$(FT_O_IN): $(LIB) $(FT_C)
 	@echo '\033[0;34m'***Compiling Lem_in***'\033[0m'
 	@gcc -I $(INC) $(FLAGS) -c $(FT_C)
 	@mkdir $(OBJ) 2> /dev/null || true
 	@mv $(FT_O) $(OBJ)
 
-$(NAME): $(FT_O)
-	@gcc -o $(NAME) $(FT_O) libft/libft.a
+$(NAME): $(FT_O_IN)
+	@gcc -o $(NAME) $(FT_O_IN) libft/libft.a
 	@echo '\033[0;32m'***Lem_in Compiled***'\033[0m'
 
 clean:

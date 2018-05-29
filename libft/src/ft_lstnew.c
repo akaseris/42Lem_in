@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akaseris <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/22 15:14:39 by akaseris          #+#    #+#             */
-/*   Updated: 2017/11/25 15:33:22 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/05/28 14:22:25 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 	}
 	else
 	{
-		new->content = malloc(content_size);
+		new->content = ft_strndup(content, content_size);
 		if (new->content == NULL)
 		{
 			free(new);
 			return (NULL);
 		}
-		ft_memcpy(new->content, content, content_size);
 		new->content_size = content_size;
 	}
 	new->next = NULL;

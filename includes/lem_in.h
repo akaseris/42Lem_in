@@ -6,7 +6,7 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 13:46:25 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/23 14:30:39 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/05/29 20:16:08 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,38 @@
 typedef struct	s_rooms
 {
 	char			*name;
+	char			*path;
 	int				pos;
+	int				full;
 	int				x;
 	int				y;
 	struct s_rooms	*next;
+	struct s_rooms	**links;
 }				t_rooms;
 
 typedef struct	s_links
 {
-	char			r1;
-	char			r2;
-	struct s_rooms	*next;
+	char			*r1;
+	char			*r2;
+	struct s_links	*next;
 }				t_links;
 
-typedef struct	s_map
-{
-	char			*name;
-	int				full;
-	int				pos;
-	int				x;
-	int				y;
-	struct s_map	**next;
-}				t_map;
-
-int				ft_getinp(void);
+int				ft_getinp(t_rooms **rooms, t_links **links);
+int				ft_checkroom(char *s, t_rooms **rooms, t_links **links, int *sten);
+int				ft_over(char *s);
+int				ft_checknum(char *s);
+int				ft_checklink(char *s, t_rooms **rooms, t_links **links);
+int				ft_valrooms(t_rooms *rooms);
+int				ft_countrooms(char *s, t_rooms *rooms);
+int				ft_createmap(t_rooms **rooms, t_links **links);
+void			ft_findroom(char *s, t_rooms **crm, t_rooms **rooms);
+int				ft_strlnk(t_rooms *room, t_links *links, char **s);
+int				ft_findpaths(t_rooms **rooms, t_list **prev);
+void			ft_findends(t_rooms **start, t_rooms **rooms, int ind);
+int				ft_inpath(t_list *prev, char *rnm);
+int				ft_addprev(t_list **prev, char *rnm);
+int				ft_addarr(t_list **arr, t_rooms **rm);
+void			ft_lstfreeone(t_list **lst);
+int				ft_move(t_rooms **rooms, t_list *paths);
 
 #endif

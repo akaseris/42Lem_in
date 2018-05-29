@@ -6,17 +6,19 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 15:20:54 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/23 17:34:25 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/05/26 13:39:57 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		ft_checkends(char *s)
+static int	ft_checkends(char *s, t_rooms **rooms, t_links **links)
 {
 	if (s[0] == '#' && s[1] == '#')
 	{
-		if (ft_strcmp(s, "##start") == 0)	
+		if (!*rooms || *links)
+			return (-1);
+		if (ft_strcmp(s, "##start") == 0)
 			return (1);
 		else if (ft_strcmp(s, "##end") == 0)
 			return (2);
@@ -24,7 +26,7 @@ int		ft_checkends(char *s)
 	return (0);
 }
 
-int		ft_checkant(char *s, t_rooms **rooms, t_links **links)
+static int	ft_checkant(char *s, t_rooms **rooms, t_links **links)
 {
 	int		i;
 
@@ -40,32 +42,34 @@ int		ft_checkant(char *s, t_rooms **rooms, t_links **links)
 	if (!(*rooms = (t_rooms *)malloc(sizeof(**rooms))))
 		return (0);
 	(*rooms)->pos = -1;
-	(*rooms)->x = ft_atoi(s);
-	return (1);
+	(*rooms)->full = ft_atoi(s);
+	if (!((*rooms)->name = ft_strdup("antnum")))
+		return (0);
+	(*rooms)->x = -1;
+	(*rooms)->y = -1;
+	return (((*rooms)->full < 1) ? 0 : 1);
 }
 
-int		ft_validline(char *s, t_rooms **rooms, t_links **links)
+static int	ft_validline(char *s, t_rooms **rooms, t_links **links)
 {
-	char		**split;
-	int			i;
 	static int	sten;
 
 	if (s[0] == '#')
 	{
-		sten = ft_checkends(s);
-		return (1);
+		sten = ft_checkends(s, rooms, links);
+		return ((sten == -1) ? 0 : 1);
 	}
 	else
 	{
 		if (ft_strchr(s, ' '))
-			return (ft_checkroom(s, rooms, links, sten));
+			return (ft_checkroom(s, rooms, links, &sten));
 		else if (ft_strchr(s, '-'))
-			return (ft_checklink(s, links));
+			return (ft_checklink(s, rooms, links));
 	}
 	return (ft_checkant(s, rooms, links));
 }
 
-int		ft_getinp(t_rooms **rooms, t_links **links)
+int			ft_getinp(t_rooms **rooms, t_links **links)
 {
 	int		r;
 	char	*tmp;
