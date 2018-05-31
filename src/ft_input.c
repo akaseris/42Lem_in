@@ -6,7 +6,7 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 15:20:54 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/26 13:39:57 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/05/31 22:18:12 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static int	ft_validline(char *s, t_rooms **rooms, t_links **links)
 {
 	static int	sten;
 
+	ft_putstr(s);
+	ft_putstr("\n");
 	if (s[0] == '#')
 	{
 		sten = ft_checkends(s, rooms, links);
@@ -91,6 +93,7 @@ int			ft_getinp(t_rooms **rooms, t_links **links)
 		}
 		ft_strdel(&tmp);
 	}
+	ft_putstr("\n");
 	ft_strdel(&tmp);
 	return (1);
 }

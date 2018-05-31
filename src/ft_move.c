@@ -6,37 +6,22 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 15:39:57 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/29 17:14:32 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/05/31 23:33:58 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		ft_joinstring(char *name, int ant, char **s)
+static int ft_strprint(int ant, char *name, int *k)
 {
-	char *tmp;
-	int i;
-
-	i = ((int)ft_strlen(*s) - 1 == -1) ? 0 : (int)ft_strlen(*s) - 1;
-	if (**s && s[0][i] != '\n')
-	{
-		if (!(*s = ft_strjoinfree(*s, *s, " ")))
-			return (0);
-	}
-	if (!(*s = ft_strjoinfree(*s, *s, "L")))
-		return (0);
-	if (!(tmp = ft_itoa(ant)))
-		return (0);
-	if (!(*s = ft_strjoinfree(*s, *s, tmp)))
-		return (0);
-	if (!(*s = ft_strjoinfree(*s, *s, "-")))
-		return (0);
-	if (!(*s = ft_strjoinfree(*s, *s, name)))
-		return (0);
-	return (1);
+	*k = *k + 1;
+	if (*k == 1)
+		return (ft_printf("\nL%d-%s", ant, name));
+	else
+		return (ft_printf(" L%d-%s", ant, name));
 }
 
-int		ft_moveone(t_rooms **crm, t_rooms **nrm, char **s, int ants)
+int		ft_moveone(t_rooms **crm, t_rooms **nrm, int ants, int *k)
 {
 	int		ant;
 
@@ -61,15 +46,14 @@ int		ft_moveone(t_rooms **crm, t_rooms **nrm, char **s, int ants)
 		(*crm)->full = 0;
 		ant = (*nrm)->full;
 	}
-	if (!(ft_joinstring((*nrm)->name, ant, s)))
-		return (0);
-	return (1);
+	return (ft_strprint(ant, (*nrm)->name, k));
 }
 
-int		ft_moveants(t_rooms **en, t_rooms **rooms, t_list *paths, char **s)
+int		ft_moveants(t_rooms **en, t_rooms **rooms, char **split)
 {
 	int		ants;
-	t_list	*tmp;
+	int		j;
+	int		k;
 	t_rooms	*crm;
 	t_rooms	*nrm;
 
@@ -77,29 +61,30 @@ int		ft_moveants(t_rooms **en, t_rooms **rooms, t_list *paths, char **s)
 	ants = crm->full;
 	while ((*en)->full != ants)
 	{
-		tmp = paths;
-		while (tmp->next)
+		j = 0;
+		k = 0;
+		while (split[j + 1])
 		{
-			ft_findroom((char*)tmp->next->content, &crm, rooms);
-			ft_findroom((char*)tmp->content, &nrm, rooms);
-			if (!(ft_moveone(&crm, &nrm, s, ants)))
+			ft_findroom(split[j + 1], &crm, rooms);
+			ft_findroom(split[j], &nrm, rooms);
+			if (!ft_moveone(&crm, &nrm, ants, &k))
 				return (0);
-			tmp = tmp->next;
+			j++;
 		}
-		*s = ((*en)->full != ants) ? ft_strjoinfree(*s, *s, "\n") : *s;
 	}
+	ft_putstr("\n");
 	return (1);
 }
 
-int		ft_move(t_rooms **rooms, t_list *paths)
+int		ft_move(t_rooms **rooms)
 {
-	char	*str;
 	t_rooms	*end;
+	char	**split;
 
 	ft_findends(&end, rooms, 1);
-	str = ft_strnew(0);
-	if (!(ft_moveants(&end, rooms, paths, &str)))
+	if (!(split = ft_strsplit(end->path, ',')))
 		return (0);
-	ft_printf("%s\n", str);
-	return (1);
+	if (!(ft_moveants(&end, rooms, split)))
+		return (ft_freesplit(split, 0));
+	return (ft_freesplit(split, 1));
 }

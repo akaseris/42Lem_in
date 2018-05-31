@@ -6,57 +6,65 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 20:08:34 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/29 21:44:32 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/05/31 23:18:31 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int	ft_paths(t_list *arrlist, t_list **prev)
+static int	ft_stpt(t_rooms **crm, t_rooms **nrm)
 {
-	int j;
-	char	*s;
-	t_list *tmp;
-	t_list *arr;
+	if (!((*nrm)->path = ft_strjoinfree((*nrm)->path, (*nrm)->name, ",")))
+		return (0);
+	if (!((*nrm)->path = ft_strjoinfree((*nrm)->path, (*nrm)->path,
+		(*crm)->path)))
+		return (0);
+	return (1);
+}
+
+static int	ft_paths(t_list *arrlist)
+{
+	int		j;
+	t_list	*tmp;
+	t_list	*arr;
+	t_rooms	*rm;
 
 	tmp = NULL;
 	arr = arrlist;
 	while (arr)
 	{
 		j = -1;
-		while (((t_rooms*)arr->content)->links[++j])
+		rm = ((t_rooms*)arr->content);
+		while (rm->links[++j])
 		{
-			if (ft_inpath(*prev, ((t_rooms*)arr->content)->links[j]->name))
-				continue ;
-			s = ft_strnew(0);
-			s = ft_strjoinfree(s, s, ((t_rooms*)arr->content)->path);
-			s = ft_strjoinfree(s, s, ",");
-			((t_rooms*)arr->content)->links[j]->path = ft_strjoinfree(s, s, ((t_rooms*)arr->content)->links[j]->name);
-			if (((t_rooms*)arr->content)->links[j]->pos == 1)
-				return (1);
-			ft_addprev(prev, ((t_rooms*)arr->content)->links[j]->name);
-			ft_addarr(&tmp, &((t_rooms*)arr->content)->links[j]);
+			if (rm->links[j]->check == 1)
+				continue;
+			if (!ft_stpt(&rm, &rm->links[j]) || !ft_addarr(&tmp, &rm->links[j]))
+				return (ft_freearr(&arrlist, 0));
+			if (rm->links[j]->pos == 1)
+				return (ft_freearr(&arrlist, 1));
+			rm->links[j]->check = 1;
 		}
 		arr = arr->next;
 	}
-	free(arr);
-	ft_paths(tmp, prev);
-	return (1);
+	ft_freearr(&arrlist, 1);
+	return (ft_paths(tmp));
 }
 
-int			ft_findpaths(t_rooms **rooms, t_list **prev)
+int			ft_findpaths(t_rooms **rooms)
 {
-	t_rooms *st;
-	t_list *arr;
+	t_rooms	*st;
+	t_list	*arr;
 
 	arr = NULL;
 	ft_findends(&st, rooms, 0);
 	free(st->path);
-	st->path = ft_strdup(st->name);
-	ft_addprev(prev, st->name);
-	ft_addarr(&arr, &st);
-	ft_paths(arr, prev);
-	ft_findends(&st, rooms, 1);
-	ft_printf("%s\n", st->path);
+	if (!(st->path = ft_strdup(st->name)))
+		return (0);
+	st->check = 1;
+	if (!ft_addarr(&arr, &st))
+		return (0);
+	if (!ft_paths(arr))
+		return (0);
 	return (1);
 }

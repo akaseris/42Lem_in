@@ -6,7 +6,7 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 16:23:43 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/29 18:07:48 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/05/31 21:51:50 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_addlinks(t_rooms **crm, t_rooms **rooms, char **s)
 	while (rnms[i])
 		i++;
 	if (!((*crm)->links = (t_rooms **)malloc(sizeof(*crm) * (i + 1))))
-		return (0);
+		return (ft_freesplit(rnms, 0));
 	i = 0;
 	while (rnms[i])
 	{
@@ -34,7 +34,7 @@ static int	ft_addlinks(t_rooms **crm, t_rooms **rooms, char **s)
 		i++;
 	}
 	(*crm)->links[i] = NULL;
-	return (1);
+	return (ft_freesplit(rnms, 1));
 }
 
 static int	ft_fillmap(t_rooms **rooms, t_links *links, int ants)

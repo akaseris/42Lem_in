@@ -6,20 +6,24 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 20:18:21 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/29 20:28:26 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/05/31 23:44:48 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		ft_addprev(t_list **prev, char *rnm)
+int		ft_freearr(t_list **lst, int ret)
 {
-	t_list *nlst;
+	t_list *tmp;
 
-	if (!(nlst = ft_lstnew(rnm, ft_strlen(rnm))))
-		return (0);
-	ft_lstadd(prev, nlst);
-	return (1);
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		//free((*lst)->content);
+		free(*lst);
+		*lst = tmp;
+	}
+	return (ret);
 }
 
 int		ft_addarr(t_list **arr, t_rooms **rm)
@@ -48,17 +52,6 @@ void	ft_findends(t_rooms **start, t_rooms **rooms, int ind)
 		}
 		tmp = tmp->next;
 	}
-}
-
-int		ft_inpath(t_list *prev, char *rnm)
-{
-	while (prev)
-	{
-		if (ft_strcmp(prev->content, rnm) == 0)
-			return (1);
-		prev = prev->next;
-	}
-	return (0);
 }
 
 void	ft_lstfreeone(t_list **lst)

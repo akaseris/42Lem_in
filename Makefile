@@ -6,11 +6,11 @@
 #    By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/25 16:35:26 by akaseris          #+#    #+#              #
-#    Updated: 2018/05/29 13:59:08 by akaseris         ###   ########.fr        #
+#    Updated: 2018/05/31 17:26:35 by akaseris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = lem_in
+NAME = lem-in
 
 SRC = src/
 INC = includes/
@@ -19,8 +19,8 @@ LIB = libft/libft.a
 
 FLAGS = -Wall -Wextra -Werror 
 
-FT = ft_lem_in ft_input ft_inp_tools ft_inp_tools2 ft_map ft_map_tools ft_path \
-		ft_path_tools ft_move
+FT = ft_lem_in ft_lemin_tools ft_input ft_inp_tools ft_inp_tools2 ft_map \
+		ft_map_tools ft_path ft_path_tools ft_move
 
 FT_O = $(patsubst %,%.o,$(FT))
 FT_O_IN = $(patsubst %,$(OBJ)%.o,$(FT))
