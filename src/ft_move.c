@@ -6,13 +6,13 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 15:39:57 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/31 23:33:58 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/06/01 19:55:39 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int ft_strprint(int ant, char *name, int *k)
+static int	ft_strprint(int ant, char *name, int *k)
 {
 	*k = *k + 1;
 	if (*k == 1)
@@ -21,7 +21,7 @@ static int ft_strprint(int ant, char *name, int *k)
 		return (ft_printf(" L%d-%s", ant, name));
 }
 
-int		ft_moveone(t_rooms **crm, t_rooms **nrm, int ants, int *k)
+static int	ft_moveone(t_rooms **crm, t_rooms **nrm, int ants, int *k)
 {
 	int		ant;
 
@@ -49,7 +49,7 @@ int		ft_moveone(t_rooms **crm, t_rooms **nrm, int ants, int *k)
 	return (ft_strprint(ant, (*nrm)->name, k));
 }
 
-int		ft_moveants(t_rooms **en, t_rooms **rooms, char **split)
+static int	ft_moveants(t_rooms **en, t_rooms **rooms, char **split)
 {
 	int		ants;
 	int		j;
@@ -76,7 +76,7 @@ int		ft_moveants(t_rooms **en, t_rooms **rooms, char **split)
 	return (1);
 }
 
-int		ft_move(t_rooms **rooms)
+int			ft_move(t_rooms **rooms)
 {
 	t_rooms	*end;
 	char	**split;

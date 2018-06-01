@@ -6,7 +6,7 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 15:26:37 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/31 22:12:21 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/06/01 19:55:11 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,27 +68,25 @@ int			ft_checkroom(char *s, t_rooms **rooms, t_links **links, int *sten)
 	int		i;
 	int		*coord;
 	char	*name;
-	char	**split;
+	char	**sp;
 
-	if (*links)
-		return (0);
 	i = 0;
+	sp = ft_strsplit(s, ' ');
+	if (*links || !sp)
+		return (ft_freesplit(sp, 0));
 	if (!(coord = (int *)malloc(sizeof(*coord) * 2)))
 		return (0);
-	if (!(split = ft_strsplit(s, ' ')))
-		return (0);
-	while (split[i])
+	while (sp[i])
 	{
 		if (i == 0)
-			name = (ft_countrooms(split[i], *rooms) == 0) ? ft_strdup(split[i])
-					: NULL;
+			name = (ft_countroom(sp[i], *rooms) == 0) ? ft_strdup(sp[i]) : NULL;
 		if (i == 1)
-			coord[0] = ft_checknum(split[i]);
+			coord[0] = ft_checknum(sp[i]);
 		if (i == 2)
-			coord[1] = ft_checknum(split[i]);
+			coord[1] = ft_checknum(sp[i]);
 		i++;
 	}
-	ft_freesplit(split, 1);
+	ft_freesplit(sp, 1);
 	if (i != 3 || coord[0] == -1 || coord[1] == -1 || !name)
 		return (0);
 	return (ft_addroom(rooms, &name, coord, sten));
@@ -108,7 +106,7 @@ int			ft_checklink(char *s, t_rooms **rooms, t_links **links)
 	split = ft_strsplit(s, '-');
 	while (split[i])
 	{
-		if (ft_countrooms(split[i], *rooms) != 1)
+		if (ft_countroom(split[i], *rooms) != 1)
 			return (ft_freesplit(split, 0));
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 13:46:25 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/31 19:42:38 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/06/01 19:54:56 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ int				ft_over(char *s);
 int				ft_checknum(char *s);
 int				ft_checklink(char *s, t_rooms **rooms, t_links **links);
 int				ft_valrooms(t_rooms *rooms);
-int				ft_countrooms(char *s, t_rooms *rooms);
+int				ft_countroom(char *s, t_rooms *rooms);
 int				ft_createmap(t_rooms **rooms, t_links **links);
 void			ft_findroom(char *s, t_rooms **crm, t_rooms **rooms);
 int				ft_strlnk(t_rooms *room, t_links *links, char **s);
 int				ft_findpaths(t_rooms **rooms);
 void			ft_findends(t_rooms **start, t_rooms **rooms, int ind);
 int				ft_addarr(t_list **arr, t_rooms **rm);
-int				ft_freearr(t_list **lst, int ret);
+int				ft_freearr(t_list **lst, t_list **tmp, int ret);
 void			ft_lstfreeone(t_list **lst);
 int				ft_move(t_rooms **rooms);
 void			ft_freerooms(t_rooms **rms);

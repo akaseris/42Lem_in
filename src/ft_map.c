@@ -6,7 +6,7 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 16:23:43 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/31 21:51:50 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/06/01 19:34:50 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	ft_addlinks(t_rooms **crm, t_rooms **rooms, char **s)
 	char	**rnms;
 	int		i;
 
+	if (*s[0] == '\0')
+		return (1);
 	room = *rooms;
 	if (!(rnms = ft_strsplit(*s, ',')))
 		return (0);

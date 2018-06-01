@@ -6,7 +6,7 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 20:08:34 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/31 23:18:31 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/06/01 16:44:56 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ static int	ft_paths(t_list *arrlist)
 			if (rm->links[j]->check == 1)
 				continue;
 			if (!ft_stpt(&rm, &rm->links[j]) || !ft_addarr(&tmp, &rm->links[j]))
-				return (ft_freearr(&arrlist, 0));
+				return (ft_freearr(&arrlist, &tmp, 0));
 			if (rm->links[j]->pos == 1)
-				return (ft_freearr(&arrlist, 1));
+				return (ft_freearr(&arrlist, &tmp, 1));
 			rm->links[j]->check = 1;
 		}
 		arr = arr->next;
 	}
-	ft_freearr(&arrlist, 1);
+	ft_freearr(&arrlist, NULL, 1);
 	return (ft_paths(tmp));
 }
 

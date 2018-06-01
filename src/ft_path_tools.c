@@ -6,22 +6,27 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 20:18:21 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/31 23:44:48 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/06/01 18:31:46 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		ft_freearr(t_list **lst, int ret)
+int		ft_freearr(t_list **lst, t_list **ltmp, int ret)
 {
 	t_list *tmp;
 
 	while (*lst)
 	{
 		tmp = (*lst)->next;
-		//free((*lst)->content);
 		free(*lst);
 		*lst = tmp;
+	}
+	while (ltmp && *ltmp)
+	{
+		tmp = (*ltmp)->next;
+		free(*ltmp);
+		*ltmp = tmp;
 	}
 	return (ret);
 }
@@ -52,6 +57,8 @@ void	ft_findends(t_rooms **start, t_rooms **rooms, int ind)
 		}
 		tmp = tmp->next;
 	}
+	if (!tmp)
+		*start = NULL;
 }
 
 void	ft_lstfreeone(t_list **lst)

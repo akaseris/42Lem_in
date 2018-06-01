@@ -6,7 +6,7 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/25 11:57:18 by akaseris          #+#    #+#             */
-/*   Updated: 2018/05/31 18:33:25 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/06/01 19:54:57 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		ft_valrooms(t_rooms *rooms)
 	return (1);
 }
 
-int		ft_countrooms(char *s, t_rooms *rooms)
+int		ft_countroom(char *s, t_rooms *rooms)
 {
 	int c;
 
