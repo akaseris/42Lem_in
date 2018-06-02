@@ -6,7 +6,7 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 20:08:34 by akaseris          #+#    #+#             */
-/*   Updated: 2018/06/01 22:24:36 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/06/02 15:45:37 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	ft_paths(t_list *arrlist)
 	{
 		j = -1;
 		rm = ((t_rooms*)arr->content);
-		while (rm->links[++j])
+		while (rm->links && rm->links[++j])
 		{
 			if (rm->links[j]->check == 1)
 				continue;
