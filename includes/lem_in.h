@@ -6,12 +6,12 @@
 /*   By: akaseris <akaseris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 13:46:25 by akaseris          #+#    #+#             */
-/*   Updated: 2018/06/01 19:54:56 by akaseris         ###   ########.fr       */
+/*   Updated: 2018/06/02 18:44:39 by akaseris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEM_IN
-# define LEM_IN
+#ifndef LEM_IN_H
+# define LEM_IN_H
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -38,7 +38,8 @@ typedef struct	s_links
 }				t_links;
 
 int				ft_getinp(t_rooms **rooms, t_links **links);
-int				ft_checkroom(char *s, t_rooms **rooms, t_links **links, int *sten);
+int				ft_checkroom(char *s, t_rooms **rooms, t_links **links,
+							int *sten);
 int				ft_over(char *s);
 int				ft_checknum(char *s);
 int				ft_checklink(char *s, t_rooms **rooms, t_links **links);
